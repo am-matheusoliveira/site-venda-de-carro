@@ -1,0 +1,61 @@
+<img id="s1" src="../IMG/Carros/webmotors-carros/template_01.jpg">
+<img id="s2" src="../IMG/Carros/webmotors-carros/template_02.jpg">
+<img id="s3" src="../IMG/Carros/webmotors-carros/template_03.jpg">
+<img id="s4" src="../IMG/Carros/webmotors-carros/template_04.jpg">
+<img id="s5" src="../IMG/Carros/webmotors-carros/template_05.jpg">
+<img id="s6" src="../IMG/Carros/webmotors-carros/template_06.jpg">
+<img id="s7" src="../IMG/Carros/webmotors-carros/template_07.jpg">
+<img id="s8" src="../IMG/Carros/webmotors-carros/template_08.jpg">
+
+<script src="../JS/jquery-3.6.0.min.js"></script>
+<script>
+   
+   // FUNÇÃO : fadeTo(duration, opacity); i fadeOut(duration, opacity);
+   // AMBAS ESCONDEM OS OBJETOS A DIFERENÇA E QUE 'fadeOut' ADICIONA UM 'display: none' NOS OBJETOS
+   
+   // ISSO: visibility: hidden E IGUAL A ISSO: opacity: 0; DIFERENÇA, OPACITY TEM ANIMAÇÃO
+   // DISPLAY NONE, ESCONDE O OBJETO E REMOVE O LOCAL OCUPADO NO LAYOUT
+
+   // TOTAL DE IMAGENS DO SLIDE   
+   var imagens = ["#s1", "#s2", "#s3", "#s4", "#s5", "#s6", "#s7", "#s8"];
+   
+   // POSIÇÃO DA 1º IMAGEM
+   imgAtual = 0;
+
+   // TEMPO DE CADA IMAGEM(Segundos)
+   tempo = 5000;
+
+   // DOCUMENTO TOTALMENTE CARREGADO
+   $(document).ready(function(){
+      
+      // MOSTRANDO A IMAGEM APOS 1 Segundo
+      $(imagens[imgAtual]).fadeTo(1000, 1);
+
+      // CHAMANDO A FUNÇÃO DE TROCA DE SLIDE E TROCANDO A IMAGEM APOS TEMPO DEFINIDO NA VARIAVEL tempo
+      setInterval(troca, tempo);
+
+      // FUNÇÃO QUE TROCA A IMAGEM
+      function troca(){
+         
+         // ESCONDENDO A IMAGEM ATUAL APOS 1 Segundo         
+         $(imagens[imgAtual]).fadeTo(1000, 0);
+
+         // IMCREMENTANDO A VARIAVEL PARA ALTERAR A PROXIMA IMAGEM QUE SERA MOSTRADA
+         imgAtual++; // 1, 2, 3, 4, 5, 6, 7, 8
+
+         // VERIFICANDO SE A IMAGEM ATUAL E IGUAL QUE O TAMANHO DO ARRAY IMAGENS
+
+         // if(imgAtual > (imagens.length-1)){ // (1 > (8-1=7)), (2 > (8-1=7)), (3 > (8-1=7)), (4 > (8-1=7)), (5 > (8-1=7)), (6 > (8-1=7)), (7 > (8-1=7)), (8 > (8-1=7))
+         // 8  >  7 = true
+
+         if(imgAtual === (imagens.length)){ // (1 === 8), (2 === 8), (3 === 8), (4 === 8), (5 === 8), (6 === 8), (7 === 8), (8 === 8)
+            // 8 === 8 = true
+            imgAtual = 0;
+         }
+
+         // MOSTRANDO A NOVA IMAGEM EM 1 Segundo APOS ADIÇÃO NA VARIAVEL imgAtual
+         $(imagens[imgAtual]).fadeTo(1000, 1);
+      }
+
+   });
+</script>

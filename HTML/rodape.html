@@ -1,0 +1,19 @@
+<script>
+    
+    // PEGANDO OS OBJETOS PELO ID
+    const interface = document.getElementById('interface');
+    const rodape = document.getElementById('rodape');
+    
+    // CONFIGURANDO A POSIÇÃO DA SEÇÃO DO RODA-PÉ NO LAYOUT
+    if(window.innerHeight >= interface.clientHeight){
+        rodape.style.marginTop = (window.innerHeight - interface.clientHeight - 27) + 'px';
+    }
+
+</script>
+
+<div id="bloco-01-roda-pe">
+    <p>CFB - veiculos </p>
+    <span>Criado por <a href="https://github.com/am-matheusoliveira" style="color: #ff6333; text-decoration: none;">Matheus Pereira</a> | 
+    <span class="far fa-copyright">&copy;</span> 2021 Todos os direitos reservados.</span>
+</div>
+<a href="login.php" target="_self" id="btlogin">Login</a>
