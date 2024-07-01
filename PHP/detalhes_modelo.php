@@ -39,7 +39,7 @@
                         $pagina = $_GET["pg"];
                         echo('<a href="carros.php?pg='.$pagina.'" class="btmenu">Voltar</a>');
                     }else{
-                        echo('<a href="index.php" class="btmenu">Voltar</a>');
+                        echo('<a href="index.php#buscador" class="btmenu">Voltar</a>');
                     }
 
 
