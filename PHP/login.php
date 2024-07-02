@@ -18,7 +18,6 @@
         <div id="interface">
             <header>
                 <?php include("topo.php"); ?>
-                <script> document.getElementById('btlogin').style.visibility = 'hidden'; </script>
             </header>
             <!---->
             <section id="main">

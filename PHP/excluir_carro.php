@@ -14,7 +14,6 @@
         <div id="interface">
             <header>
                 <?php include("topo.php"); ?>
-                <script> document.getElementById('btlogin').style.visibility = 'hidden'; </script>
             </header>
             <!---->
             <section id="section_form">
@@ -66,10 +65,13 @@
                         <h3>Selecione o Carro.</h3>
                         <select name="select_excluir_carro" id="select_excluir_carro" size="15" required>
                             <?php 
-                                $consulta = 'SELECT TB_CRR.ID_CARRO,  CONCAT(TB_CRR.ID_CARRO," - ",TB_MCS.MARCA," - ",TB_MOD.MODELO," - ",TB_CRR.VERSAO," - ",TB_CRR.ANO_FAB," - ",TB_CRR.ANO_MOD," - R$ ",TB_CRR.VALOR) AS CARRO
+                                $consulta = 'SELECT TB_CRR.ID_CARRO,  CONCAT(TB_CRR.ID_CARRO," - ",TB_MCS.MARCA," - ",TB_MOD.MODELO," - ",TB_MOD_VERSAO.MODELO_VERSAO) AS CARRO
                                 FROM TB_CARROS AS TB_CRR
                                 INNER JOIN TB_MARCAS AS TB_MCS  ON TB_CRR.ID_MARCA  = TB_MCS.ID_MARCA
-                                INNER JOIN TB_MODELOS AS TB_MOD ON TB_CRR.ID_MODELO = TB_MOD.ID_MODELO';
+                                INNER JOIN TB_MODELOS AS TB_MOD ON TB_CRR.ID_MODELO = TB_MOD.ID_MODELO
+                                INNER JOIN TB_MODELO_VERSOES AS TB_MOD_VERSAO ON (TB_CRR.ID_MODELO_VERSAO = TB_MOD_VERSAO.ID_MODELO_VERSAO)
+                                '
+                                ;
                                 $result = mysqli_query($conexao, $consulta);                                                     
                                 $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
                                 foreach ($rows as $row) { ?>

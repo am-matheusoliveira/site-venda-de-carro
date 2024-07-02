@@ -65,8 +65,7 @@
     <body>
         <div id="interface">
             <header>
-                <?php include("topo.php"); ?>
-                <!-- <script> document.getElementById('btlogin').style.visibility = 'hidden'; </script> -->
+                <?php include("topo.php"); ?>                
             </header>
             <!---->
             <section id="section_form">            
@@ -74,7 +73,7 @@
                     <a href="gerenciamento.php?num=<?php echo($numSecao); ?>" target="_self" class="btmenu">Retornar</a>                    
                     <a id="mensagem_acao" disabled></a>
                     <h2>Novo Carro.</h2>                
-                    <form name="" class="formulario_padrao" method="POST" action="novo_carro.php" enctype="multipart/form-data">
+                    <form name="" class="formulario_padrao" method="POST" action="edita_ou_novo_carro.php" enctype="multipart/form-data">
                         <input type="hidden" name="num" value="<?php echo($numSecao); ?>">
                         <!---->
                         <label for="select_marcas">Marcas:</label>

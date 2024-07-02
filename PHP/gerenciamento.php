@@ -17,7 +17,6 @@
         <div id="interface">
             <header>
                 <?php include("topo.php"); ?>
-                <script> document.getElementById('btlogin').style.visibility = 'hidden'; </script>
             </header>
             <!---->
             <section class="secao_topo_geren">
@@ -26,7 +25,7 @@
                     <div class="menu_ger">
                         <button id="mostraMenuCarros" class="btmenu widthButton">Carros</button>
                         <div id="menuCarros" class="menuB">
-                            <a href="novo_carro.php?num=<?php echo($numSecao); ?>" target="_self">Novo</a>
+                            <a href="edita_ou_novo_carro.php?num=<?php echo($numSecao); ?>" target="_self">Novo</a>
                             <a href="" target="_self">Editar</a>
                             <a href="excluir_carro.php?num=<?php echo($numSecao); ?>" target="_self">Excluir</a>
                             <a href="marcas_modelos.php?num=<?php echo($numSecao); ?>" target="_self">Marcas-Modelos</a>
