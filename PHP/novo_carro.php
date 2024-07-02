@@ -16,32 +16,49 @@
         <link rel="icon" href="../IMG/logoGoogle.png" />
         <script src="../JS/jquery-3.6.0.min.js"></script>
         <script>
-            $(document).ready(function(){                
-                //$('select[name="select_marcas"]').on('click', function(){
+            $(document).ready(function(){
+                //
                 $('select[name="select_marcas"]').on('change', function(){
                     var vmarcas = this.value;
-                    //var options = [];
+                    var first_option = null;
+                    //
                     $('select[name="select_modelos"] option').each(function(){
                         var $this = $(this);                        
                         if($this.data('marca') == vmarcas){
-                            //options.push($this.val());
                             $this.show();
+                            //
+                            if(first_option === null){
+                                first_option = $this.data('id');
+                            }
                         }else{
                             $this.hide();
-                            //alert($this.data('marca'));
-                        }                        
+                        }
                     });
-                    /*alert(options.length);
-                    for(var cont = 0; cont <= options.length; cont++){
-                        alert(options[cont]);                        
-                    }*/
-
-                    //$('#select_modelos').prop("selectedIndex", options[0]);
-                    $('select[name="select_modelos"]').val('');
-
-                    //var isVisible = $("#myDiv" ).is(":visible");
-                    //var isHidden = $("#myDiv" ).is(":hidden");
+                    //                    
+                    $("select[name='select_modelos']")[0].selectedIndex = first_option;
+                    $('select[name="select_modelos"]').trigger('change');
                 });
+
+                $('select[name="select_modelos"]').on('change', function(){
+                    var vmodelos = this.value;
+                    var first_option = null;
+                    //
+                    $('select[name="select_modelo_versao"] option').each(function(){
+                        var $this = $(this);
+                        if($this.data('modelo') == vmodelos){
+                            $this.show();
+                            //
+                            if(first_option === null){
+                                first_option = $this.data('id');
+                            }                            
+                        }else{
+                            $this.hide();
+                        }
+                    });
+                    //
+                    $("select[name='select_modelo_versao']")[0].selectedIndex = first_option;
+                });
+                //
             });
         </script>
     </head>
@@ -49,7 +66,7 @@
         <div id="interface">
             <header>
                 <?php include("topo.php"); ?>
-                <script> document.getElementById('btlogin').style.visibility = 'hidden'; </script>
+                <!-- <script> document.getElementById('btlogin').style.visibility = 'hidden'; </script> -->
             </header>
             <!---->
             <section id="section_form">            
@@ -62,6 +79,7 @@
                         <!---->
                         <label for="select_marcas">Marcas:</label>
                         <select name="select_marcas" id="select_marcas" required>
+                            <!-- <option value="">Selecione uma Marca</option> -->
                             <?php
                                 $consulta  = "SELECT * FROM tb_marcas";
                                 $resultado = mysqli_query($conexao, $consulta);
@@ -72,15 +90,31 @@
                                 }
                             ?>
                         </select>
+                        
                         <label for="select_modelos">Modelos:</label>
                         <select name="select_modelos" id="select_modelos" required>
+                            <!-- <option value="">Selecione um Modelo</option> -->
                             <?php
                                 $consulta  = "SELECT * FROM tb_modelos";
                                 $resultado = mysqli_query($conexao, $consulta);
                                 $valores   = mysqli_fetch_all($resultado, MYSQLI_ASSOC);
                                 //
-                                foreach($valores as $valores){
-                                    echo("<option value='".$valores["id_modelo"]."' data-marca='".$valores["id_marca"]."'>".$valores["modelo"]."</option>");
+                                foreach($valores as $key => $valores){
+                                    echo("<option value='".$valores["id_modelo"]."' data-marca='".$valores["id_marca"]."' data-id='".$key."'>".$valores["modelo"]."</option>");
+                                }
+                            ?>
+                        </select>
+                        
+                        <label for="select_modelo_versao">Modelo Versão:</label>
+                        <select name="select_modelo_versao" id="select_modelo_versao" required>
+                            <!-- <option value="">Selecione um Modelo Versão</option> -->
+                            <?php
+                                $consulta  = "SELECT * FROM tb_modelo_versoes";
+                                $resultado = mysqli_query($conexao, $consulta);
+                                $valores   = mysqli_fetch_all($resultado, MYSQLI_ASSOC);
+                                //
+                                foreach($valores as $key => $valores){
+                                    echo("<option value='".$valores["id_modelo_versao"]."' data-modelo='".$valores["id_modelo"]."' data-id='".$key."'>".$valores["modelo_versao"]."</option>");
                                 }
                             ?>
                         </select>
@@ -135,9 +169,11 @@
         </div>
 
         <script type="text/javascript">
-            $(window).on("load", function(){                
+            //
+            $(window).on("load", function(){  
                 var vmarcas = $("#select_marcas option:selected").val();
-                $('select[name="select_modelos"] option').each(function(){                    
+                //
+                $('select[name="select_modelos"] option').each(function(){
                     var $this = $(this);
                     if($this.data('marca') == vmarcas){
                         $this.show();                            
@@ -145,7 +181,17 @@
                         $this.hide();
                     }
                 });
-                $('select[name="select_modelos"]').val('');
+                
+                var vmodelos = $("#select_modelos option:selected").val();
+                //
+                $('select[name="select_modelo_versao"] option').each(function(){
+                    var $this = $(this);
+                    if($this.data('modelo') == vmodelos){
+                        $this.show();
+                    }else{
+                        $this.hide();
+                    }
+                });
             });
         </script> 
     </body>
@@ -216,7 +262,7 @@
         }
         //Fim do tratamento das Fotos
         
-        //Inicio do tratamento do campos Opcionais
+        //Inicio do tratamento dos campos Opcionais
         $opc_s_marcados    = array();
         $opc_s_marcados[0] = "0";
         $opc_s_marcados[1] = "0";
@@ -229,23 +275,24 @@
         }        
         //Fim do tratamento do campos Opcionais
         
-        $id_marca  = $_POST["select_marcas"];
-        $id_modelo = $_POST["select_modelos"];
-        $versao    = $_POST["f_versao"];
-        $ano_fab   = $_POST["f_anofab"];
-        $ano_mod   = $_POST["f_anomod"];
-        $obs       = $_POST["f_obs"];
-        $valor     = $_POST["f_valor"];
-        $foto01    = $vetFotos[0];
-        $foto02    = $vetFotos[1];
-        $mini01    = $vetMinis[0];
-        $mini02    = $vetMinis[1];
-        $vendido   = 0;
-        $bloqueado = 0;
+        $id_marca         = $_POST["select_marcas"];
+        $id_modelo        = $_POST["select_modelos"];
+        $id_modelo_versao = $_POST["select_modelo_versao"];
+        $versao           = $_POST["f_versao"];
+        $ano_fab          = $_POST["f_anofab"];
+        $ano_mod          = $_POST["f_anomod"];
+        $obs              = $_POST["f_obs"];
+        $valor            = $_POST["f_valor"];
+        $foto01           = $vetFotos[0];
+        $foto02           = $vetFotos[1];
+        $mini01           = $vetMinis[0];
+        $mini02           = $vetMinis[1];
+        $vendido          = 0;
+        $bloqueado        = 0;
 
-        $sql = "INSERT INTO tb_carros(id_marca, id_modelo, versao, ano_fab, ano_mod, obs, valor, foto1, foto2, min3, min4, opc1, opc2, opc3, vendido, bloqueado)
-        VALUES ('$id_marca', '$id_modelo', '$versao', '$ano_fab', '$ano_mod', '$obs', '$valor', '$foto01', '$foto02', '$mini01', '$mini02', '$opc_s_marcados[0]', '$opc_s_marcados[1]', '$opc_s_marcados[2]', '$vendido', '$bloqueado')";
-
+        $sql = "INSERT INTO tb_carros(id_marca, id_modelo, id_modelo_versao, versao, ano_fab, ano_mod, obs, valor, foto1, foto2, min3, min4, opc1, opc2, opc3, vendido, bloqueado)
+        VALUES ('$id_marca', '$id_modelo', '$id_modelo_versao', '$versao', '$ano_fab', '$ano_mod', '$obs', '$valor', '$foto01', '$foto02', '$mini01', '$mini02', '$opc_s_marcados[0]', '$opc_s_marcados[1]', '$opc_s_marcados[2]', '$vendido', '$bloqueado')";
+        
         include("mensagem_acao.php");
     }
 ?>

@@ -30,10 +30,11 @@
                     $inicio = $pagina_atual - 1;
                     $inicio *= $maximo_registros_exibidos;
 
-                    $consulta  = "SELECT TB_CRR.*, TB_MCS.MARCA, TB_MOD.MODELO
+                    $consulta  = "SELECT TB_CRR.*, TB_MCS.MARCA, TB_MOD.MODELO, TB_MOD_VERSAO.modelo_versao
                     FROM TB_CARROS AS TB_CRR
                     INNER JOIN TB_MARCAS AS TB_MCS  ON TB_CRR.ID_MARCA  = TB_MCS.ID_MARCA
                     INNER JOIN TB_MODELOS AS TB_MOD ON TB_CRR.ID_MODELO = TB_MOD.ID_MODELO
+                    INNER JOIN TB_MODELO_VERSOES AS TB_MOD_VERSAO ON (TB_CRR.ID_MODELO_VERSAO = TB_MOD_VERSAO.ID_MODELO_VERSAO)
                     LIMIT $inicio, $maximo_registros_exibidos";
                     $resultado    = mysqli_query($conexao, $consulta); 
 
@@ -52,9 +53,11 @@
                                 echo('<div id="d2">');
                                     echo('<div id="titulo">');
                                         echo('<div id="t1">');
-                                            echo('<a href="detalhes_modelo.php?id_carro='.$valores["id_carro"].'&pg='.$pagina_atual.'"><p>'.$valores["MARCA"].'</p>');
-                                            echo('<p>'.$valores["MODELO"].'</p>');
-                                            echo('<p>'.$valores["versao"].'</p></a>');
+                                            echo('<a href="detalhes_modelo.php?id_carro='.$valores["id_carro"].'&pg='.$pagina_atual.'">
+                                                  <p>MARCA: '.$valores["MARCA"].'</p>');
+                                            echo('<p>MODELO: '.$valores["MODELO"].'</p>');
+                                            echo('<p>ANO VERSÃO: '.$valores["versao"].'</p></a>');
+                                            echo('<p>MODELO VERSÃO: '.$valores["modelo_versao"].'</p></a>');                                            
                                         echo('</div>');
                                         echo('<div id="t2">');
                                             echo('<p>R$ '.number_format($valores["valor"], 2, ',', '.').'</p>');

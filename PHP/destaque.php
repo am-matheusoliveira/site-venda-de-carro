@@ -29,9 +29,10 @@
              <div id="titulo">
                 <div id="t1">
                    <a href="detalhes_modelo.php?id_carro=<?= $registro["id_carro"] ?>">
-                      <p><?= $registro["marca"]  ?></p>
-                      <p><?= $registro["modelo"] ?></p>
-                      <p><?= $registro["versao"] ?></p>
+                      <p>MARCA: <?= $registro["marca"]  ?></p>
+                      <p>MODELO: <?= $registro["modelo"] ?></p>
+                      <p>ANO VERSÃO: <?= $registro["versao"] ?></p>
+                      <p>MODELO VERSÃO: <?= $registro["modelo_versao"] ?></p>
                    </a>
                 </div>
                 <div id="t2">

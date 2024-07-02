@@ -75,16 +75,17 @@
                              <div id="titulo">
                                 <div id="t1">
                                    <a href="detalhes_modelo.php?id_carro=${value.id_carro}">
-                                      <p>${value.marca}</p>
-                                      <p>${value.modelo}</p>
-                                      <p>${value.versao}</p>
+                                      <p>MARCA: ${value.marca}</p>
+                                      <p>MODELO: ${value.modelo}</p>
+                                      <p>ANO VERSÃO: ${value.versao}</p>
+                                      <p>MODELO VERSÃO: ${value.modelo_versao}</p>
                                    </a>
                                 </div>
                                 <div id="t2">
                                    <p>${parseFloat(value.valor).toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</p>
                                 </div>
                              </div>
-                             <div id="dados">Ano - Fabricação: ${value.ano_fab}<br>Ano - Modelo: ${value.ano_mod}<br>Vendido: ${value.vendido}</div>
+                             <div id="dados">Ano - Fabricação: ${value.ano_fab}<br>Ano - Modelo: ${value.ano_mod}<br>Vendido: ${value.vendido == 0 ? 'NÃO' : 'SIM'}</div>
                              <div></div>
                           </div>
                        </article>

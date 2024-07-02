@@ -42,11 +42,14 @@
                         echo('<a href="index.php#buscador" class="btmenu">Voltar</a>');
                     }
 
-
-                    $consulta  = "SELECT TB_CRR.*, TB_MCS.MARCA, TB_MOD.MODELO
+                    // ATUALIZANDO O CAMPO 'qtd_visitas' DA TABELA 'tb_carro'
+                    mysqli_query($conexao, "UPDATE tb_carros SET qtd_visitas = (qtd_visitas + 1) WHERE id_carro = " . $id_carro);
+                    //
+                    $consulta  = "SELECT TB_CRR.*, TB_MCS.MARCA, TB_MOD.MODELO, TB_MOD_VERSAO.modelo_versao
                     FROM TB_CARROS AS TB_CRR
                     INNER JOIN TB_MARCAS AS TB_MCS  ON TB_CRR.ID_MARCA  = TB_MCS.ID_MARCA
                     INNER JOIN TB_MODELOS AS TB_MOD ON TB_CRR.ID_MODELO = TB_MOD.ID_MODELO
+                    INNER JOIN TB_MODELO_VERSOES AS TB_MOD_VERSAO ON (TB_CRR.ID_MODELO_VERSAO = TB_MOD_VERSAO.ID_MODELO_VERSAO)
                     WHERE TB_CRR.id_carro = $id_carro";
 
                     $resultado = mysqli_query($conexao, $consulta);
@@ -65,6 +68,7 @@
                                     echo('Código : '.$valores["id_carro"].'<br/>');
                                     echo('Marca: '.$valores["MARCA"].'<br/>');
                                     echo('Modelo: '.$valores["MODELO"].'<br/>');
+                                    echo('Modelo Versão: '.$valores["modelo_versao"].'<br/>');
                                     echo('Versão: '.$valores["versao"].'<br/>');
                                     echo('Preço <span class="preco">R$ '.number_format($valores["valor"], 2, ',', '.').'</span><br/>');
                                     echo('Ano: '.$valores["ano_fab"].'<br/>');
